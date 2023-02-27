@@ -242,7 +242,7 @@ async function removeOutcome(outcomeDOM) {
     var res = await fetch(url, {
         method: "POST", 
         body: JSON.stringify({
-            oid: incomeDOM.querySelector(".statistic-body-log-oid").dataset.oid
+            oid: outcomeDOM.querySelector(".statistic-body-log-oid").dataset.oid
         })
     })
     document.getElementById("modal").classList.toggle("unavailable");
