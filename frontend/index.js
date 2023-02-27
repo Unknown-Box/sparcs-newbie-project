@@ -34,8 +34,6 @@ async function initialize() {
                    await changeFocusDate(changedDate);
                });
 
-    // updateIncomeList(GLOBAL.focusDate);
-    // updateOutcomeList(GLOBAL.focusDate);
     updateLogsByDate(GLOBAL.focusDate);
 
     var addIncomeForm = document.querySelector(".statistic:nth-child(4) form");
@@ -111,8 +109,6 @@ async function changeFocusDate(date) {
     var calanderDOM = document.querySelector("#calander");
     setCalanderDOM(calanderDOM, GLOBAL.focusDate);
 
-    // await updateIncomeList(GLOBAL.focusDate);
-    // await updateOutcomeList(GLOBAL.focusDate);
     updateLogsByDate(GLOBAL.focusDate);
 }
 
@@ -191,60 +187,6 @@ function updateOutcomeLogsDOMByLogs(logs) {
     outcomeStatisticDOM.querySelector(".statistic-header-totalvalue").dataset.totalvalue = logs.reduce((curr, prev) => curr + prev.value, 0).toLocaleString();
 }
 
-// async function updateIncomeList(date) {
-//     var incomeStatisticDOM = document.querySelector(".statistic:nth-child(4)");
-//     var incomeStatisticBodyDOM = incomeStatisticDOM.querySelector(".statistic-body");
-//     var incomes = await getIncomeList(date);
-
-//     while(incomeStatisticBodyDOM.firstChild)
-//         incomeStatisticBodyDOM.removeChild(incomeStatisticBodyDOM.firstChild);
-
-//     incomes.forEach(income => {
-//         var tmp = document.querySelector("#statistic-body-log-tmp");
-//         var incomeDOM = document.importNode(tmp.content, true);
-
-//         incomeDOM.querySelector(".statistic-body-log-removebtn")
-//                  .addEventListener("click", async function() {
-//                      removeIncome(this.parentElement);
-//                  })
-
-//         incomeDOM.querySelector(".statistic-body-log-title").dataset.title = income.title;
-//         incomeDOM.querySelector(".statistic-body-log-value").dataset.value = income.value.toLocaleString();
-//         incomeDOM.querySelector(".statistic-body-log-oid").dataset.oid = income._id;
-
-//         incomeStatisticBodyDOM.appendChild(incomeDOM);
-//     })
-
-//     incomeStatisticDOM.querySelector(".statistic-header-totalvalue").dataset.totalvalue = incomes.reduce((curr, prev) => curr + prev.value, 0).toLocaleString();
-// }
-
-// async function updateOutcomeList(date) {
-//     var outcomeStatisticDOM = document.querySelector(".statistic:nth-child(5)");
-//     var outcomeStatisticBodyDOM = outcomeStatisticDOM.querySelector(".statistic-body");
-//     var outcomes = await getOutcomeList(date);
-
-//     while(outcomeStatisticBodyDOM.firstChild)
-//         outcomeStatisticBodyDOM.removeChild(outcomeStatisticBodyDOM.firstChild);
-
-//     outcomes.forEach(outcome => {
-//         var tmp = document.querySelector("#statistic-body-log-tmp");
-//         var outcomeDOM = document.importNode(tmp.content, true);
-
-//         outcomeDOM.querySelector(".statistic-body-log-removebtn")
-//                   .addEventListener("click", async function() {
-//                       removeOutcome(this.parentElement);
-//                   })
-
-//         outcomeDOM.querySelector(".statistic-body-log-title").dataset.title = outcome.title;
-//         outcomeDOM.querySelector(".statistic-body-log-value").dataset.value = outcome.value.toLocaleString();
-//         outcomeDOM.querySelector(".statistic-body-log-oid").dataset.oid = outcome._id;
-
-//         outcomeStatisticBodyDOM.appendChild(outcomeDOM);
-//     })
-
-//     outcomeStatisticDOM.querySelector(".statistic-header-totalvalue").dataset.totalvalue = outcomes.reduce((curr, prev) => curr + prev.value, 0).toLocaleString();
-// }
-
 async function addIncome(form) {
     document.getElementById("modal").classList.toggle("unavailable");
     var url = "https://2ek7ssl7mzxwhsohhe4mrqlx3y0gclxk.lambda-url.us-east-1.on.aws/";
@@ -260,7 +202,6 @@ async function addIncome(form) {
     document.getElementById("modal").classList.toggle("unavailable");
     form[1].value = "";
     form[2].value = "";
-    // await updateIncomeList(GLOBAL.focusDate);
     await updateLogsByDate(GLOBAL.focusDate);
 }
 
@@ -274,7 +215,6 @@ async function removeIncome(incomeDOM) {
         })
     })
     document.getElementById("modal").classList.toggle("unavailable");
-    // await updateIncomeList(GLOBAL.focusDate);
     await updateLogsByDate(GLOBAL.focusDate);
 }
 
@@ -293,7 +233,6 @@ async function addOutcome(form) {
     document.getElementById("modal").classList.toggle("unavailable");
     form[1].value = "";
     form[2].value = "";
-    // await updateOutcomeList(GLOBAL.focusDate);
     await updateLogsByDate(GLOBAL.focusDate);
 }
 
@@ -307,7 +246,6 @@ async function removeOutcome(outcomeDOM) {
         })
     })
     document.getElementById("modal").classList.toggle("unavailable");
-    // await updateOutcomeList(GLOBAL.focusDate);
     await updateLogsByDate(GLOBAL.focusDate);
 }
 
