@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="index.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet"> 
+        <title>rkrPqn</title>
+    </head>
+    <body>
+        <div id="header">
+            <div id="header-title">rkrPqn</div>
+        </div>
+        <div id="profile">
+            <div id="profile-image">
+                <img alt="profile-image" src="src/profile.jpg" />
+            </div>
+            <div id="profile-info">
+                <div id="profile-info-name" data-profile-name="Profile Name"></div>
+                <div id="profile-info-message" data-profile-message="Profile Message - ipsum lorem"></div>
+            </div>
+        </div>
+        <div id="calander">
+            <div id="calander-header">
+                <div id="calander-header-weekinfo" data-weekinfo="2023년 2월 2주차"></div>
+                <div id="calander-header-weekcontroler">
+                    <button type="button" id="calander-header-weekcontroler-dec">&lt;</button>
+                    <button type="button" id="calander-header-weekcontroler-inc">&gt;</button>
+                </div>
+            </div>
+            <div id="calander-body">
+                <div class="calander-body-date">
+                    <div class="calander-body-date-dayslot" data-day="일"></div>
+                    <input type="radio" id="1" name="calander-body-date-activatebtn" class="calander-body-date-activatebtn" data-btnindex="0" />
+                    <label for="1" class="calander-body-date-activeslot"></label>
+                    <div class="calander-body-date-dateslot" data-date="7"></div>
+                </div>
+                <div class="calander-body-date">
+                    <div class="calander-body-date-dayslot" data-day="월"></div>
+                    <input type="radio" id="2" name="calander-body-date-activatebtn" class="calander-body-date-activatebtn" data-btnindex="1" />
+                    <label for="2" class="calander-body-date-activeslot"></label>
+                    <div class="calander-body-date-dateslot" data-date="8"></div>
+                </div>
+                <div class="calander-body-date">
+                    <div class="calander-body-date-dayslot" data-day="화"></div>
+                    <input type="radio" id="3" name="calander-body-date-activatebtn" class="calander-body-date-activatebtn" data-btnindex="2" />
+                    <label for="3" class="calander-body-date-activeslot"></label>
+                    <div class="calander-body-date-dateslot" data-date="9"></div>
+                </div>
+                <div class="calander-body-date">
+                    <div class="calander-body-date-dayslot" data-day="수"></div>
+                    <input type="radio" id="4" name="calander-body-date-activatebtn" class="calander-body-date-activatebtn" data-btnindex="3" />
+                    <label for="4" class="calander-body-date-activeslot"></label>
+                    <div class="calander-body-date-dateslot" data-date="10"></div>
+                </div>
+                <div class="calander-body-date">
+                    <div class="calander-body-date-dayslot" data-day="목"></div>
+                    <input type="radio" id="5" name="calander-body-date-activatebtn" class="calander-body-date-activatebtn" data-btnindex="4" />
+                    <label for="5" class="calander-body-date-activeslot"></label>
+                    <div class="calander-body-date-dateslot" data-date="11"></div>
+                </div>
+                <div class="calander-body-date">
+                    <div class="calander-body-date-dayslot" data-day="금"></div>
+                    <input type="radio" id="6" name="calander-body-date-activatebtn" class="calander-body-date-activatebtn" data-btnindex="5" />
+                    <label for="6" class="calander-body-date-activeslot"></label>
+                    <div class="calander-body-date-dateslot" data-date="12"></div>
+                </div>
+                <div class="calander-body-date">
+                    <div class="calander-body-date-dayslot" data-day="토"></div>
+                    <input type="radio" id="7" name="calander-body-date-activatebtn" class="calander-body-date-activatebtn" data-btnindex="6" />
+                    <label for="7" class="calander-body-date-activeslot"></label>
+                    <div class="calander-body-date-dateslot" data-date="13"></div>
+                </div>
+            </div>
+        </div>
+        <div class="statistic">
+            <div class="statistic-header">
+                <div class="statistic-header-tagname" data-tagname="수입"></div>
+                <div class="statistic-header-totalvalue" data-totalvalue=""></div>
+            </div>
+            <div class="statistic-body"></div>
+            <form class="statistic-form">
+                <input type="submit" value="+" />
+                <input type="text" id="statistic-form-title" placeholder="title" />
+                <input type="text" id="statistic-form-value" placeholder="value" />
+            </form>
+        </div>
+        <div class="statistic">
+            <div class="statistic-header">
+                <div class="statistic-header-tagname" data-tagname="지출"></div>
+                <div class="statistic-header-totalvalue" data-totalvalue=""></div>
+            </div>
+            <div class="statistic-body"></div>
+            <form class="statistic-form">
+                <input type="submit" value="+" />
+                <input type="text" id="statistic-form-title" placeholder="title" />
+                <input type="text" id="statistic-form-value" placeholder="value" />
+            </form>
+        </div>
+        <div id="modal" class="unavailable">
+            <div id="loading-container">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <!-- <template id="statistic-tmp">
+            <div class="statistic">
+                <div class="statistic-header">
+                    <div class="statistic-header-tagname" data-tagname=""></div>
+                    <div class="statistic-header-totalvalue" data-totalvalue=""></div>
+                </div>
+                <div class="statistic-body"></div>
+            </div>
+        </template> -->
+        <template id="statistic-body-log-tmp">
+            <div class="statistic-body-log">
+                <button type="button" class="statistic-body-log-removebtn">-</button>
+                <div class="statistic-body-log-title" data-title=""></div>
+                <div class="statistic-body-log-value" data-value=""></div>
+                <div class="statistic-body-log-oid" data-oid=""></div>
+            </div>
+        </template>
+        <script src="index.js"></script>
+    </body>
+</html>

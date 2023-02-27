@@ -1,0 +1,343 @@
+body {
+    padding: 4px 16px;
+    color: whitesmoke;
+    position: relative;
+    background-color: black;
+}
+
+#header {
+    margin-bottom: 16px;
+}
+
+#profile {
+    display: flex;
+    flex-direction: row;
+}
+
+#profile #profile-image img {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+
+    display: inline-block;
+}
+
+#profile #profile-info {
+    margin-left: 16px;
+}
+
+#profile #profile-info #profile-info-name::before {
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: bold;
+    content: attr(data-profile-name);
+}
+
+#profile #profile-info #profile-info-message::before {
+    color: #999;
+    font-size: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: lighter;
+    content: attr(data-profile-message);
+}
+
+#calander {
+    margin-top: 32px;
+}
+
+#calander #calander-header {
+    margin-bottom: 4px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    display: flex;
+
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#calander #calander-header #calander-header-weekinfo::before {
+    content: attr(data-weekinfo);
+}
+
+#calander #calander-header #calander-header-weekcontroler button {
+    border: none;
+    color: whitesmoke;
+    font-weight: bold;
+    background-color: black;
+}
+
+#calander #calander-header #calander-header-weekcontroler button:hover {
+    cursor: pointer;
+}
+
+#calander #calander-body {
+    font-size: 12px;
+
+    display: flex;
+
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#calander #calander-body .calander-body-date {
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+}
+
+#calander #calander-body .calander-body-date .calander-body-date-dayslot {
+    margin-bottom: 4px;
+}
+
+#calander #calander-body .calander-body-date .calander-body-date-dayslot::before {
+    content: attr(data-day);
+}
+
+#calander #calander-body .calander-body-date .calander-body-date-activatebtn {
+    display: none;
+}
+
+#calander #calander-body .calander-body-date .calander-body-date-activeslot {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    margin-bottom: 2px;
+
+    display: block;
+
+    background-color: #333;
+}
+
+#calander #calander-body .calander-body-date .calander-body-date-activeslot:hover {
+    cursor: pointer;
+}
+
+#calander #calander-body .calander-body-date .calander-body-date-activatebtn:checked ~ .calander-body-date-activeslot {
+    background-color: #999;
+}
+
+#calander #calander-body .calander-body-date .calander-body-date-dateslot::before {
+    content: attr(data-date);
+}
+
+.statistic {
+    margin-top: 32px;
+}
+
+.statistic .statistic-header {
+    display: flex;
+
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.statistic .statistic-header .statistic-header-tagname {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    background-color: #333;
+}
+
+.statistic .statistic-header .statistic-header-tagname:before {
+    content: attr(data-tagname);
+}
+
+.statistic .statistic-header .statistic-header-totalvalue {
+    font-weight: bold;
+}
+
+.statistic .statistic-header .statistic-header-totalvalue:before {
+    content: attr(data-totalvalue);
+}
+
+.statistic .statistic-body {
+    margin-top: 16px;
+    padding-left: 32px;
+    padding-right: 16px;
+}
+
+.statistic .statistic-body .statistic-body-log {
+    font-size: 12px;
+
+    display: flex;
+
+    flex-direction: row;
+    justify-content: space-between;
+
+    position: relative;
+}
+
+.statistic .statistic-body .statistic-body-log:not(:last-child) {
+    margin-bottom: 8px;
+}
+
+.statistic .statistic-body .statistic-body-log .statistic-body-log-removebtn {
+    width: 16px;
+    height: 16px;
+    border: none;
+    transform: translateX(-24px);
+    position: absolute;
+    color: inherit;
+    background-color: inherit;
+}
+
+.statistic .statistic-body .statistic-body-log .statistic-body-log-removebtn:hover {
+    cursor: pointer;
+    background-color: #333;
+}
+
+.statistic .statistic-body .statistic-body-log .statistic-body-log-title {
+    width: 24ch;
+}
+
+.statistic .statistic-body .statistic-body-log .statistic-body-log-title::before {
+    content: attr(data-title);
+}
+
+.statistic .statistic-body .statistic-body-log .statistic-body-log-value {
+    width: 16ch;
+    text-align: right;
+}
+
+.statistic .statistic-body .statistic-body-log .statistic-body-log-value::before {
+    content: attr(data-value);
+}
+
+.statistic .statistic-body .statistic-body-log .statistic-body-log-oid {
+    display: none;
+}
+
+.statistic .statistic-form {
+    margin-top: 8px;
+    padding-left: 32px;
+    padding-right: 16px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    display: flex;
+
+    flex-direction: row;
+    justify-content: space-between;
+
+    position: relative;
+}
+
+.statistic .statistic-form input {
+    border: none;
+    color: inherit;
+    background-color: inherit;
+}
+
+.statistic .statistic-form input:focus {
+    outline: none;
+}
+
+.statistic .statistic-form input[type="submit"] {
+    width: 16px;
+    height: 16px;
+    transform: translateX(-24px);
+    position: absolute;
+}
+
+.statistic .statistic-form input[type="submit"]:hover {
+    cursor: pointer;
+    background-color: #333;
+}
+
+.statistic .statistic-form #statistic-form-title {
+    width: 24ch;
+}
+
+.statistic .statistic-form #statistic-form-value {
+    width: 16ch;
+    text-align: right;
+}
+
+#modal {
+    top: -8px;
+    left: -8px;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    position: absolute;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: #9993;
+    backdrop-filter: blur(2px);
+}
+
+#modal.unavailable {
+    display: none;
+}
+
+#modal #loading-container div {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+
+    display: inline-block;
+
+    background-color: #999;
+}
+
+#modal #loading-container div:nth-child(1) {
+    animation-name: loading;
+    animation-delay: -1s;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+#modal #loading-container div:nth-child(2) {
+    animation-name: loading;
+    animation-delay: -.5s;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+#modal #loading-container div:nth-child(3) {
+    animation-name: loading;
+    animation-delay: 0s;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes loading {
+    0% {
+        filter: brightness(200%);
+        transform: translateY(-8px);
+    }
+
+    50% {
+        filter: brightness(100%);
+        transform: translateY(0px);
+    }
+
+    100% {
+        filter: brightness(200%);
+        transform: translateY(-8px);
+    }
+}
+
+
+@media screen and (min-width: 576px) {
+    body * {
+        display: none;
+    }
+
+    body::after {
+        content: "Device not supported";
+    }
+}
