@@ -34,8 +34,9 @@ async function initialize() {
                    await changeFocusDate(changedDate);
                });
 
-    updateIncomeList(GLOBAL.focusDate);
-    updateOutcomeList(GLOBAL.focusDate);
+    // updateIncomeList(GLOBAL.focusDate);
+    // updateOutcomeList(GLOBAL.focusDate);
+    updateLogsByDate(GLOBAL.focusDate);
 
     var addIncomeForm = document.querySelector(".statistic:nth-child(4) form");
     addIncomeForm.addEventListener("submit", async function(event) {
@@ -110,34 +111,18 @@ async function changeFocusDate(date) {
     var calanderDOM = document.querySelector("#calander");
     setCalanderDOM(calanderDOM, GLOBAL.focusDate);
 
-    await updateIncomeList(GLOBAL.focusDate);
-    await updateOutcomeList(GLOBAL.focusDate);
+    // await updateIncomeList(GLOBAL.focusDate);
+    // await updateOutcomeList(GLOBAL.focusDate);
+    updateLogsByDate(GLOBAL.focusDate);
 }
 
-async function getIncomeList(date) {
-    var url = "https://rnlswyyu5fj4de3r3hjiencahq0arxtk.lambda-url.us-east-1.on.aws/";
+async function listLog(date) {
+    var url = "https://vzxe47qptn22lboye2qzuufbzm0ouwrw.lambda-url.us-east-1.on.aws/";
     document.getElementById("modal").classList.toggle("unavailable");
     var res = await fetch(url, {
         method: "POST", 
-        headers: {
-            "Content-Type": "application/json"
-        }, 
         body: JSON.stringify({
-            url: "https://ap-southeast-1.aws.data.mongodb-api.com/app/data-bgjek/endpoint/data/v1/action/find", 
-            headers: {
-                "Content-Type": "application/json", 
-                "Access-Control-Allow-Origin": "*", 
-                "api-key": "FMGf4bnqZMFUCEp9RToJUlgp89czIu2kTMCQFNUaeFaKi90FNvTxxCwK8ZUszkC6"
-            }, 
-            body: {
-                collection: "logs", 
-                database: "rkrPqn", 
-                dataSource: "Cluster0", 
-                filter: {
-                    type: "income", 
-                    createdAt: date.toISOString().split("T")[0]
-                }
-            }
+            createdAt: date.toISOString().split("T")[0]
         })
     });
     var tmp = await res.json();
@@ -145,46 +130,23 @@ async function getIncomeList(date) {
     return tmp.documents;
 }
 
-async function getOutcomeList(date) {
-    var url = "https://rnlswyyu5fj4de3r3hjiencahq0arxtk.lambda-url.us-east-1.on.aws/";
-    document.getElementById("modal").classList.toggle("unavailable");
-    var res = await fetch(url, {
-        method: "POST", 
-        headers: {
-            "Content-Type": "application/json"
-        }, 
-        body: JSON.stringify({
-            url: "https://ap-southeast-1.aws.data.mongodb-api.com/app/data-bgjek/endpoint/data/v1/action/find", 
-            headers: {
-                "Content-Type": "application/json", 
-                "Access-Control-Allow-Origin": "*", 
-                "api-key": "FMGf4bnqZMFUCEp9RToJUlgp89czIu2kTMCQFNUaeFaKi90FNvTxxCwK8ZUszkC6"
-            }, 
-            body: {
-                collection: "logs", 
-                database: "rkrPqn", 
-                dataSource: "Cluster0", 
-                filter: {
-                    type: "outcome", 
-                    createdAt: date.toISOString().split("T")[0]
-                }
-            }
-        })
-    });
-    var tmp = await res.json();
-    document.getElementById("modal").classList.toggle("unavailable");
-    return tmp.documents;
+async function updateLogsByDate(date) {
+    var logs = await listLog(date);
+    var incomeLogs = logs.filter(log => log.type === "income");
+    var outcomeLogs = logs.filter(log => log.type === "outcome");
+
+    updateIncomeLogsDOMByLogs(incomeLogs);
+    updateOutcomeLogsDOMByLogs(outcomeLogs);
 }
 
-async function updateIncomeList(date) {
+function updateIncomeLogsDOMByLogs(logs) {
     var incomeStatisticDOM = document.querySelector(".statistic:nth-child(4)");
     var incomeStatisticBodyDOM = incomeStatisticDOM.querySelector(".statistic-body");
-    var incomes = await getIncomeList(date);
 
     while(incomeStatisticBodyDOM.firstChild)
         incomeStatisticBodyDOM.removeChild(incomeStatisticBodyDOM.firstChild);
 
-    incomes.forEach(income => {
+    logs.forEach(log => {
         var tmp = document.querySelector("#statistic-body-log-tmp");
         var incomeDOM = document.importNode(tmp.content, true);
 
@@ -193,25 +155,24 @@ async function updateIncomeList(date) {
                      removeIncome(this.parentElement);
                  })
 
-        incomeDOM.querySelector(".statistic-body-log-title").dataset.title = income.title;
-        incomeDOM.querySelector(".statistic-body-log-value").dataset.value = income.value.toLocaleString();
-        incomeDOM.querySelector(".statistic-body-log-oid").dataset.oid = income._id;
+        incomeDOM.querySelector(".statistic-body-log-title").dataset.title = log.title;
+        incomeDOM.querySelector(".statistic-body-log-value").dataset.value = log.value.toLocaleString();
+        incomeDOM.querySelector(".statistic-body-log-oid").dataset.oid = log._id;
 
         incomeStatisticBodyDOM.appendChild(incomeDOM);
     })
 
-    incomeStatisticDOM.querySelector(".statistic-header-totalvalue").dataset.totalvalue = incomes.reduce((curr, prev) => curr + prev.value, 0).toLocaleString();
+    incomeStatisticDOM.querySelector(".statistic-header-totalvalue").dataset.totalvalue = logs.reduce((curr, prev) => curr + prev.value, 0).toLocaleString();
 }
 
-async function updateOutcomeList(date) {
+function updateOutcomeLogsDOMByLogs(logs) {
     var outcomeStatisticDOM = document.querySelector(".statistic:nth-child(5)");
     var outcomeStatisticBodyDOM = outcomeStatisticDOM.querySelector(".statistic-body");
-    var outcomes = await getOutcomeList(date);
 
     while(outcomeStatisticBodyDOM.firstChild)
         outcomeStatisticBodyDOM.removeChild(outcomeStatisticBodyDOM.firstChild);
 
-    outcomes.forEach(outcome => {
+    logs.forEach(log => {
         var tmp = document.querySelector("#statistic-body-log-tmp");
         var outcomeDOM = document.importNode(tmp.content, true);
 
@@ -220,15 +181,69 @@ async function updateOutcomeList(date) {
                       removeOutcome(this.parentElement);
                   })
 
-        outcomeDOM.querySelector(".statistic-body-log-title").dataset.title = outcome.title;
-        outcomeDOM.querySelector(".statistic-body-log-value").dataset.value = outcome.value.toLocaleString();
-        outcomeDOM.querySelector(".statistic-body-log-oid").dataset.oid = outcome._id;
+        outcomeDOM.querySelector(".statistic-body-log-title").dataset.title = log.title;
+        outcomeDOM.querySelector(".statistic-body-log-value").dataset.value = log.value.toLocaleString();
+        outcomeDOM.querySelector(".statistic-body-log-oid").dataset.oid = log._id;
 
         outcomeStatisticBodyDOM.appendChild(outcomeDOM);
     })
 
-    outcomeStatisticDOM.querySelector(".statistic-header-totalvalue").dataset.totalvalue = outcomes.reduce((curr, prev) => curr + prev.value, 0).toLocaleString();
+    outcomeStatisticDOM.querySelector(".statistic-header-totalvalue").dataset.totalvalue = logs.reduce((curr, prev) => curr + prev.value, 0).toLocaleString();
 }
+
+// async function updateIncomeList(date) {
+//     var incomeStatisticDOM = document.querySelector(".statistic:nth-child(4)");
+//     var incomeStatisticBodyDOM = incomeStatisticDOM.querySelector(".statistic-body");
+//     var incomes = await getIncomeList(date);
+
+//     while(incomeStatisticBodyDOM.firstChild)
+//         incomeStatisticBodyDOM.removeChild(incomeStatisticBodyDOM.firstChild);
+
+//     incomes.forEach(income => {
+//         var tmp = document.querySelector("#statistic-body-log-tmp");
+//         var incomeDOM = document.importNode(tmp.content, true);
+
+//         incomeDOM.querySelector(".statistic-body-log-removebtn")
+//                  .addEventListener("click", async function() {
+//                      removeIncome(this.parentElement);
+//                  })
+
+//         incomeDOM.querySelector(".statistic-body-log-title").dataset.title = income.title;
+//         incomeDOM.querySelector(".statistic-body-log-value").dataset.value = income.value.toLocaleString();
+//         incomeDOM.querySelector(".statistic-body-log-oid").dataset.oid = income._id;
+
+//         incomeStatisticBodyDOM.appendChild(incomeDOM);
+//     })
+
+//     incomeStatisticDOM.querySelector(".statistic-header-totalvalue").dataset.totalvalue = incomes.reduce((curr, prev) => curr + prev.value, 0).toLocaleString();
+// }
+
+// async function updateOutcomeList(date) {
+//     var outcomeStatisticDOM = document.querySelector(".statistic:nth-child(5)");
+//     var outcomeStatisticBodyDOM = outcomeStatisticDOM.querySelector(".statistic-body");
+//     var outcomes = await getOutcomeList(date);
+
+//     while(outcomeStatisticBodyDOM.firstChild)
+//         outcomeStatisticBodyDOM.removeChild(outcomeStatisticBodyDOM.firstChild);
+
+//     outcomes.forEach(outcome => {
+//         var tmp = document.querySelector("#statistic-body-log-tmp");
+//         var outcomeDOM = document.importNode(tmp.content, true);
+
+//         outcomeDOM.querySelector(".statistic-body-log-removebtn")
+//                   .addEventListener("click", async function() {
+//                       removeOutcome(this.parentElement);
+//                   })
+
+//         outcomeDOM.querySelector(".statistic-body-log-title").dataset.title = outcome.title;
+//         outcomeDOM.querySelector(".statistic-body-log-value").dataset.value = outcome.value.toLocaleString();
+//         outcomeDOM.querySelector(".statistic-body-log-oid").dataset.oid = outcome._id;
+
+//         outcomeStatisticBodyDOM.appendChild(outcomeDOM);
+//     })
+
+//     outcomeStatisticDOM.querySelector(".statistic-header-totalvalue").dataset.totalvalue = outcomes.reduce((curr, prev) => curr + prev.value, 0).toLocaleString();
+// }
 
 async function addIncome(form) {
     document.getElementById("modal").classList.toggle("unavailable");
@@ -245,7 +260,8 @@ async function addIncome(form) {
     document.getElementById("modal").classList.toggle("unavailable");
     form[1].value = "";
     form[2].value = "";
-    await updateIncomeList(GLOBAL.focusDate);
+    // await updateIncomeList(GLOBAL.focusDate);
+    await updateLogsByDate(GLOBAL.focusDate);
 }
 
 async function removeIncome(incomeDOM) {
@@ -258,7 +274,8 @@ async function removeIncome(incomeDOM) {
         })
     })
     document.getElementById("modal").classList.toggle("unavailable");
-    await updateIncomeList(GLOBAL.focusDate);
+    // await updateIncomeList(GLOBAL.focusDate);
+    await updateLogsByDate(GLOBAL.focusDate);
 }
 
 async function addOutcome(form) {
@@ -276,7 +293,8 @@ async function addOutcome(form) {
     document.getElementById("modal").classList.toggle("unavailable");
     form[1].value = "";
     form[2].value = "";
-    await updateOutcomeList(GLOBAL.focusDate);
+    // await updateOutcomeList(GLOBAL.focusDate);
+    await updateLogsByDate(GLOBAL.focusDate);
 }
 
 async function removeOutcome(outcomeDOM) {
@@ -289,7 +307,8 @@ async function removeOutcome(outcomeDOM) {
         })
     })
     document.getElementById("modal").classList.toggle("unavailable");
-    await updateOutcomeList(GLOBAL.focusDate);
+    // await updateOutcomeList(GLOBAL.focusDate);
+    await updateLogsByDate(GLOBAL.focusDate);
 }
 
 
