@@ -1,3 +1,7 @@
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
 body {
     padding: 4px 16px;
     color: whitesmoke;
@@ -28,7 +32,6 @@ body {
 
 #profile #profile-info #profile-info-name::before {
     font-size: 14px;
-    font-family: 'Noto Sans KR', sans-serif;
     font-weight: bold;
     content: attr(data-profile-name);
 }
@@ -36,7 +39,6 @@ body {
 #profile #profile-info #profile-info-message::before {
     color: #999;
     font-size: 12px;
-    font-family: 'Noto Sans KR', sans-serif;
     font-weight: lighter;
     content: attr(data-profile-message);
 }
